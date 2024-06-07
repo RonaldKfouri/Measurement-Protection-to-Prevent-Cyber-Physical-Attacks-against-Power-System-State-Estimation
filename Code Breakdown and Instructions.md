@@ -6,14 +6,18 @@ A generalized Integer Linear Programming (ILP) formulation of the resource alloc
 
 ## Base Formulation
 The optimization problem boils down to the following:
-$$
-\text{Minimize } \sum_{m} (PC_m * w_m) \\
-\text{Subject to} \\
-\sum_{m} L_{m,i} \geq 1   \qquad \forall \; i \\
-\sum_{i} (K_{m,i}*L_{m,i}) = w_m   \qquad \forall \; m \\
-w_{m_p} + \sum_{m_f}(w_{m_f} * K_{m_f,i}) < \sum_i K_{m_p,i} \qquad \forall \; m_p \\
-\sum_{m_t} w_{m_t} \geq 1
-$$
+
+$`
+\begin{align}
+     \text{Minimize } \sum_{m} (PC_m * w_m) \\
+     \text{Subject to} \\
+     \sum_{m} L_{m,i} \geq 1   \qquad \forall \; i \\
+     \sum_{i} (K_{m,i}*L_{m,i}) = w_m   \qquad \forall \; m \\
+     w_{m_p} + \sum_{m_f}(w_{m_f} * K_{m_f,i}) < \sum_i K_{m_p,i} \qquad \forall \; m_p \\
+     \sum_{m_t} w_{m_t} \geq 1
+\end{align}
+`$
+
 We will first break down the equations and notations, one by one, then see how they are implemented in GAMS. Initially, the types of measurements considered in this paper are the following:
 1. Active power injection measurements (index $m_p$)
 2. Active power flow measurements (index $m_f$)
@@ -39,11 +43,11 @@ Free Variable z;
 We note that $y$ in GAMS represents $L$ in the paper, simply because we did not want to confuse $L$ with less equal or $.L$ from GAMS; $w$ and $y$ (or $L$) will be defined in the following, and $z$ is a free variable because it represents the objective function.
 
 ### Definition 1:
-We define an $M \times N$ binary matrix $\bm{K}$ that relates the measurements, having an index $m$, to the state variables, having an index $i$, where $M$ is the total number of measurements in the system and $N$ is the number of nodes. Thus, the rows represent the measurements and the columns represent the nodes. The entries of the $\bm{K}$ matrix are assigned as follows: (this corresponds to Equation (8) in the paper)
+We define an $M \times N$ binary matrix $\mathbf{K}$ that relates the measurements, having an index $m$, to the state variables, having an index $i$, where $M$ is the total number of measurements in the system and $N$ is the number of nodes. Thus, the rows represent the measurements and the columns represent the nodes. The entries of the $\mathbf{K}$ matrix are assigned as follows: (this corresponds to Equation (8) in the paper)
 $$
 K_{m,i} = \left\{
     \begin{array}{ll}
-        1 \text{, if $h_m(\bm{x})$ is a function of $x_i$} \\
+        1 \text{, if $h_m(\mathbf{x})$ is a function of $x_i$} \\
         0 \text{ otherwise}
     \end{array}
 \right. 
@@ -53,7 +57,7 @@ Consider the arbitrary 4-node partial network, as a demonstrative exmaple, shown
 
 ![Arbitray 4-Bus Matrix](4Bus.png)
 
-The $\bm{K}$ matrix for the arbitray 4-bus system would be the following:
+The $\mathbf{K}$ matrix for the arbitray 4-bus system would be the following:
 
 ![K Matrix](KMatrix4Bus.png)
 
@@ -99,11 +103,11 @@ z29       0       0       0       0       0       0       1       0       0     
 ```
 
 ### Definition 2:
-We introduce the term _cover_ to refer to the relationship between a variable and the protected measurement securing it. Protecting measurement $m$ secures a single state variable $i$, if and only if the corresponding entry in the $\bm{K}$ matrix, $K_{m,i}$, is $1$. We thus define an $M \times N$ binary matrix $\bm{L}$, of dependent variables, such that:
+We introduce the term _cover_ to refer to the relationship between a variable and the protected measurement securing it. Protecting measurement $m$ secures a single state variable $i$, if and only if the corresponding entry in the $\mathbf{K}$ matrix, $K_{m,i}$, is $1$. We thus define an $M \times N$ binary matrix $\mathbf{L}$, of dependent variables, such that:
 $$
 L_{m,i} = \left\{
     \begin{array}{ll}
-        1 \text{, if $x_i$ is \textit{covered} by $h_m(\bm{x})$} \\
+        1 \text{, if $x_i$ is \textit{covered} by $h_m(\mathbf{x})$} \\
         0 \text{ otherwise}
     \end{array}
 \right.
@@ -120,16 +124,16 @@ Eq10(i).. sum(m,y(m,i)) =G= 1;
 ```
 
 ### Definition 3:
-We define an $M \times 1$ vector $\bm{w}$, of decision variables, such that:
+We define an $M \times 1$ vector $\mathbf{w}$, of decision variables, such that:
 
-$$
+$`
 w_m = \left\{
     \begin{array}{ll}
         1 \text{, if measurement $m$ is protected} \\
         0 \text{ otherwise}
     \end{array}
 \right.
-$$
+`$
 
 For a protected measurement to _cover_ a single state variable, the following constraint must be satisfied:
 
