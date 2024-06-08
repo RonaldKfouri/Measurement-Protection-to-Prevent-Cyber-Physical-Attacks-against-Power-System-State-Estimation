@@ -44,14 +44,15 @@ We note that $y$ in GAMS represents $L$ in the paper, simply because we did not 
 
 ### Definition 1:
 We define an $M \times N$ binary matrix $\mathbf{K}$ that relates the measurements, having an index $m$, to the state variables, having an index $i$, where $M$ is the total number of measurements in the system and $N$ is the number of nodes. Thus, the rows represent the measurements and the columns represent the nodes. The entries of the $\mathbf{K}$ matrix are assigned as follows: (this corresponds to Equation (8) in the paper)
-$$
+
+$`
 K_{m,i} = \left\{
     \begin{array}{ll}
         1 \text{, if $h_m(\mathbf{x})$ is a function of $x_i$} \\
         0 \text{ otherwise}
     \end{array}
 \right. 
-$$
+`$
 
 Consider the arbitrary 4-node partial network, as a demonstrative exmaple, shown in the below figure. The phase angle reference is assumed to be outside of this network, thus $N=4$.
 
@@ -104,19 +105,21 @@ z29       0       0       0       0       0       0       1       0       0     
 
 ### Definition 2:
 We introduce the term _cover_ to refer to the relationship between a variable and the protected measurement securing it. Protecting measurement $m$ secures a single state variable $i$, if and only if the corresponding entry in the $\mathbf{K}$ matrix, $K_{m,i}$, is $1$. We thus define an $M \times N$ binary matrix $\mathbf{L}$, of dependent variables, such that:
-$$
+
+$`
 L_{m,i} = \left\{
     \begin{array}{ll}
         1 \text{, if $x_i$ is \textit{covered} by $h_m(\mathbf{x})$} \\
         0 \text{ otherwise}
     \end{array}
 \right.
-$$
+`$
 
 To ensure that each state variable is _covered_ at least once, for full observability, the following constraint must be satisfied: 
-$$
+
+$`
 \sum_{m} L_{m,i} \geq 1   \qquad \forall \; i
-$$
+`$
 
 In the original paper, we refer to the previous equation as Equation (10). In GAMS, it can be represented as follows:
 ``` gams
@@ -137,9 +140,9 @@ w_m = \left\{
 
 For a protected measurement to _cover_ a single state variable, the following constraint must be satisfied:
 
-$$
+$`
 \sum_{i} (K_{m,i}*L_{m,i}) = w_m   \qquad \forall \; m
-$$
+`$
 
 Which is represented as follows:
 ``` gams
@@ -148,9 +151,9 @@ Eq12(m).. sum(i,K(m,i)*y(m,i)) =E= w(m);
 
 If a given node has a power injection measurement in addition to power flow measurements on all lines leaving it, the equations corresponding to these measurements are not independent. To guarantee that not all these measurements are chosen to be protected simultaneously, the following condition is needed:
 
-$$
+$`
     w_{m_p} + \sum_{m_f}(w_{m_f} * K_{m_f,i}) < \sum_i K_{m_p,i} \qquad \forall \; m_p
-$$
+`$
 
 Which is represented as follows:
 ``` gams
@@ -158,9 +161,9 @@ Eq13(pi,i).. sum (pf, w(pf)*K(pf,i)) + w(pi) =L= sum (i2, K(pi,i2));
 ```
 In the case of an external voltage angle reference, we need at least one phase angle measurement in order to have the values of the phase angles and not only the phase angle differences. Thus, the following additional constraint is required to make sure that the correct phase angles are calculated:
 
-$$
+$`
     \sum_{m_t} w_{m_t} \geq 1
-$$
+`$
 
 Which is represented as follows:
 ``` gams
