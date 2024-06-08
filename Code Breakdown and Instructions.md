@@ -185,6 +185,8 @@ The complete code for the base scenario is provided in this repository. Simulati
 
 ![14-Bus Sytem](IEEE14BusProtected.jpg) 
 
+We note that problem is overdetermined (because the grid is fully observable), thus there is not a unique solution; there are multiple optimal solutions especially for the simple base scenario.
+
 ## Other Scenarios
 ### Scenario II: Partial Grid Protection:
 We assume that we have a partial grid to be protected, which, conversely, translates to having a limited protection budget.
