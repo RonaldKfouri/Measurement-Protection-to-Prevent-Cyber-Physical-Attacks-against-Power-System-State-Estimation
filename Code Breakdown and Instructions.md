@@ -33,14 +33,14 @@ Sets
      i  index    / i00*i13 /
   Alias (i,i2);
 ```
-$m$ is the total number of measurements, which is $30$ because the grid has to be fully observable; $pi$ represents the power injection measurements, $pf$ represents the power flow measurements, and $t$ represents the angle measurements (or theta measurements). Finally, $i$ represents the number of nodes in the IEEE 14-bus system.
+`m` is the total number of measurements, which is $30$ because the grid has to be fully observable; `pi` represents the power injection measurements, `pf` represents the power flow measurements, and `t` represents the angle measurements (or theta measurements). Finally, `i` represents the number of nodes in the IEEE 14-bus system.
 
 The rest of the header of the code is the following:
 ```GAMS
 Binary Variable w(m), y(m,i);
 Free Variable z;
 ```
-We note that $y$ in GAMS represents $L$ in the paper, simply because we did not want to confuse $L$ with less equal or $.L$ from GAMS; $w$ and $y$ (or $L$) will be defined in the following, and $z$ is a free variable because it represents the objective function.
+We note that `y` in GAMS represents $L$ in the paper, simply because we did not want to confuse $L$ with less equal or `.L` from GAMS; `w` and `y` (or $L$) will be defined in the following, and `z` is a free variable because it represents the objective function.
 
 ### Definition 1:
 We define an $M \times N$ binary matrix $\mathbf{K}$ that relates the measurements, having an index $m$, to the state variables, having an index $i$, where $M$ is the total number of measurements in the system and $N$ is the number of nodes. Thus, the rows represent the measurements and the columns represent the nodes. The entries of the $\mathbf{K}$ matrix are assigned as follows: (this corresponds to Equation (8) in the paper)
