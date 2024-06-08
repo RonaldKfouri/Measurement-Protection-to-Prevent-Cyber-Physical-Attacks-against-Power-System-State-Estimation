@@ -56,15 +56,15 @@ K_{m,i} = \left\{
 
 Consider the arbitrary 4-node partial network, as a demonstrative exmaple, shown in the below figure. The phase angle reference is assumed to be outside of this network, thus $N=4$.
 
-![Arbitray 4-Bus Matrix](4Bus.png)
+![Arbitray 4-Bus Matrix](Images/4Bus.png)
 
 The $\mathbf{K}$ matrix for the arbitray 4-bus system would be the following:
 
-![K Matrix](KMatrix4Bus.png)
+![K Matrix](Images/KMatrix4Bus.png)
 
 For the IEEE 14-bus system, shown in the figure below, the GAMS representation is the following:
 
-![14-bus](IEEE14Bus.jpg)
+![14-bus](Images/IEEE14Bus.jpg)
 
 ```GAMS
 Table K(m,i)
@@ -183,7 +183,7 @@ OF.. sum(m,w(m)) =E= z;
 ```
 The complete code for the base scenario is provided in this repository. Simulating the code would result in the following measurements to be protected:
 
-![14-Bus Sytem](IEEE14BusProtected.jpg) 
+![14-Bus Sytem](Images/IEEE14BusProtected.jpg) 
 
 We note that problem is overdetermined (because the grid is fully observable), thus there is not a unique solution; there are multiple optimal solutions especially for the simple base scenario.
 
