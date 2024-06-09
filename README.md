@@ -6,7 +6,7 @@ This paper presents an attack _prevention_ technique to ensure that attack vecto
 
 The algorithm is based on an Integer Linear Programming (ILP) approach. The method selects a subset of measurements to be protected so the grid would be protected in its entirety. It does not rely on power flow equations but only on the topology of the grid and the measurement relations. It can be applied to both linear and nonlinear State Estimation, accomodates different measurement types, and imposes distinct protection costs for different measurement types.
 
-The algorithm requires basic knowledge of the General Algebraic Modeling System (GAMS). It is explained in details in [Code Breakdown and Instructions.md](https://github.com/RonaldKfouri/Measurement_Protection_Against_CyberPhysical_Attacks_on_State_Estimation/blob/0a8394965c19cbbe35282d70fbef15a111bbf39f/Code%20Breakdown%20and%20Instructions.md).
+The algorithm requires basic knowledge of the General Algebraic Modeling System (GAMS). It is explained in details in [Code Breakdown and Instructions.md](https://github.com/RonaldKfouri/Measurement_Protection_Against_CyberPhysical_Attacks_on_State_Estimation/blob/a36ec91842320a31019a1d671f1b459cfd1b8f8e/Code%20Breakdown%20and%20Instructions.md).
 
 If you want to cite this work:
 ``` bibtex
